@@ -9,17 +9,19 @@
 
 folder_to_install = node['install_sc_apps']['folder_to_install']
 folder_git_keys   = node['install_sc_apps']['folder_git_keys']
+enviroment        = node['install_sc_apps']['enviroment']
+
 git_wrapper_path  = "#{folder_to_install}/git_wrapper.sh"
 
-# Create dir
-# directory "#{folder_to_install}" do
-#   owner 'vagrant'
-#   group 'root'
-#   mode '0666'
-#   action :create
-# end
+# Create dir if not exists
+directory "#{folder_to_install}" do
+  owner 'vagrant'
+  group 'root'
+  mode '0666'
+  action :create
+end
 
-# Create ssh wrapper
+# Create ssh wrapper file
 file git_wrapper_path do
   owner "vagrant"
   mode "0755"
@@ -46,7 +48,6 @@ git sc_app_folder do
   action :sync
   ssh_wrapper git_wrapper_path
   user "vagrant"
-  # notifies :run, "execute[install-gems]", :immediately
 end
 
 
@@ -61,23 +62,24 @@ rvm_shell "bundle" do
   cwd         sc_app_folder
   code        <<-EOF
     bundle install --path .bundle
-    rake db:setup
   EOF
 end
 
-# application 'sample_rails' do
-#   owner 'vagrant'
-#   group 'vagrant'
-#   path sc_app_folder
-#   repository sc_app_repo
-#   rails do
-#     # bundler true
-#     # database do
-#       # adapter "sqlite3"
-#       # database "db/production.sqlite3"
-#     # end
-#   end
-#   # unicorn do
-#     # worker_processes 2
-#   # end
+# config seucondominio
+# tasks = ""
+# case enviroment
+# when "production"
+# when "staging"
+# when "development"
+#   tasks << "rake db:setup;"
 # end
+  
+# bash "sc_config" do
+#   user "vagrant"
+#   cwd  sc_app_folder
+#   code <<-EOH
+#     cp gitignore_sample .gitignore
+#     cp config/application_sample.yml config/application.yml
+#     #{tasks}
+#   EOH
+# end  
