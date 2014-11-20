@@ -7,14 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
-folder_to_install = node['install_sc_apps']['folder_to_install']
-folder_git_keys   = node['install_sc_apps']['folder_git_keys']
-enviroment        = node['install_sc_apps']['enviroment']
+folder_apps = node['sc_config']['folder_apps']
+enviroment  = node['sc_config']['enviroment']
 
-git_wrapper_path  = "#{folder_to_install}/git_wrapper.sh"
+git_wrapper_path  = "#{folder_apps}/git_wrapper.sh"
 
 # Create dir if not exists
-directory "#{folder_to_install}" do
+directory "#{folder_apps}" do
   owner 'vagrant'
   group 'root'
   mode '0666'
@@ -25,12 +24,12 @@ end
 file git_wrapper_path do
   owner "vagrant"
   mode "0755"
-  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_git_keys}/.ssh/id_rsa \"$@\""
+  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_apps}/.ssh/id_rsa \"$@\""
 end
 
 
 # Clone socket server
-socket_app_folder = "#{folder_to_install}/socket_server"
+socket_app_folder = "#{folder_apps}/socket_server"
 git socket_app_folder do
   repository "git@github.com:denoww/socket-server-seucondominio.git"
   revision "master"
@@ -40,7 +39,7 @@ git socket_app_folder do
 end
 
 # Clone seucondominio
-sc_app_folder = "#{folder_to_install}/rails"
+sc_app_folder = "#{folder_apps}/rails"
 sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
 git sc_app_folder do
   repository sc_app_repo
