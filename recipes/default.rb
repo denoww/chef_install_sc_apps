@@ -60,7 +60,7 @@ rvm_shell "bundle" do
   group       "vagrant"
   cwd         sc_app_folder
   code        <<-EOF
-    bundle install --path .bundle
+    bundle install
   EOF
 end
 
