@@ -19,7 +19,7 @@ folder_git_keys   = node['install_sc_apps']['folder_git_keys']
 # end
 
 # Create ssh wrapper
-file "/home/vagrant/git_wrapper.sh" do
+file "#{folder_to_install}/git_wrapper.sh" do
   owner "vagrant"
   mode "0755"
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_git_keys}/.ssh/id_rsa \"$@\""
