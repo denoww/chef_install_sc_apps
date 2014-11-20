@@ -7,10 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
-apps_folder = node['install_sc_apps']['folder']
+folder_to_install = node['install_sc_apps']['folder_to_install']
+folder_git_keys   = node['install_sc_apps']['folder_git_keys']
 
 # Create dir
-directory "#{apps_folder}" do
+directory "#{folder_to_install}" do
   owner 'vagrant'
   group 'root'
   mode '0666'
@@ -21,12 +22,12 @@ end
 file "/home/vagrant/git_wrapper.sh" do
   owner "vagrant"
   mode "0755"
-  content "#!/bin/sh\nexec /usr/bin/ssh -i /home/vagrant/.ssh/id_rsa \"$@\""
+  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_git_keys}/.ssh/id_rsa \"$@\""
 end
 
 
 # Clone socket server
-socket_app_folder = "#{apps_folder}/socket_server"
+socket_app_folder = "#{folder_to_install}/socket_server"
 git socket_app_folder do
   repository "git@github.com:denoww/socket-server-seucondominio.git"
   revision "master"
@@ -36,7 +37,7 @@ git socket_app_folder do
 end
 
 # Clone seucondominio
-sc_app_folder = "#{apps_folder}/rails"
+sc_app_folder = "#{folder_to_install}/rails"
 sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
 git sc_app_folder do
   repository sc_app_repo
@@ -50,6 +51,16 @@ end
 
 gem_package 'bundler' do
   options '--no-ri --no-rdoc'
+end
+
+rvm_shell "bundle" do
+  ruby_string node[:rvm][:default_ruby]
+  user        "vagrant"
+  group       "vagrant"
+  cwd         sc_app_folder
+  code        <<-EOF
+    bundle install --path .bundle
+  EOF
 end
 
 # application 'sample_rails' do
@@ -68,14 +79,3 @@ end
 #     # worker_processes 2
 #   # end
 # end
-
-
-rvm_shell "bundle" do
-  ruby_string node[:rvm][:default_ruby]
-  user        "vagrant"
-  group       "vagrant"
-  cwd         sc_app_folder
-  code        <<-EOF
-    bundle install --path .bundle
-  EOF
-end
