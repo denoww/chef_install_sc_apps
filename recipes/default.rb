@@ -60,6 +60,7 @@ rvm_shell "bundle" do
   cwd         sc_app_folder
   code        <<-EOF
     bundle install --path .bundle
+    rake db:setup
   EOF
 end
 
