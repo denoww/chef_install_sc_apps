@@ -27,10 +27,10 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['install_sc_apps']['bacon']</tt></td>
+    <td><tt>['install_sc_apps']['folder']</tt></td>
     <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td>whether to include folder</td>
+    <td><tt>"/vagrant/sc-apps"</tt></td>
   </tr>
 </table>
 

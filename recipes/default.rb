@@ -7,8 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
+apps_folder = node['install_sc_apps']['folder']
+
 # Create dir
-directory "/vagrant/apps" do
+directory "#{apps_folder}" do
   owner 'vagrant'
   group 'root'
   mode '0666'
@@ -24,7 +26,7 @@ end
 
 
 # Clone socket server
-socket_app_folder = "/vagrant/apps/socket_server"
+socket_app_folder = "#{apps_folder}/socket_server"
 git socket_app_folder do
   repository "git@github.com:denoww/socket-server-seucondominio.git"
   revision "master"
@@ -34,7 +36,7 @@ git socket_app_folder do
 end
 
 # Clone seucondominio
-sc_app_folder = "/vagrant/apps/rails"
+sc_app_folder = "#{apps_folder}/rails"
 sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
 git sc_app_folder do
   repository sc_app_repo
@@ -42,7 +44,7 @@ git sc_app_folder do
   action :sync
   ssh_wrapper "/home/vagrant/git_wrapper.sh"
   user "vagrant"
-  notifies :run, "execute[install-gems]", :immediately
+  # notifies :run, "execute[install-gems]", :immediately
 end
 
 
