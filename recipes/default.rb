@@ -11,12 +11,12 @@ folder_to_install = node['install_sc_apps']['folder_to_install']
 folder_git_keys   = node['install_sc_apps']['folder_git_keys']
 
 # Create dir
-directory "#{folder_to_install}" do
-  owner 'vagrant'
-  group 'root'
-  mode '0666'
-  action :create
-end
+# directory "#{folder_to_install}" do
+#   owner 'vagrant'
+#   group 'root'
+#   mode '0666'
+#   action :create
+# end
 
 # Create ssh wrapper
 file "/home/vagrant/git_wrapper.sh" do
