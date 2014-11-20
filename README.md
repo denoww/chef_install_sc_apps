@@ -28,8 +28,8 @@ e.g.
   </tr>
   <tr>
     <td><tt>['install_sc_apps']['folder']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include folder</td>
+    <td>String</td>
+    <td>..</td>
     <td><tt>"/vagrant/sc-apps"</tt></td>
   </tr>
 </table>
