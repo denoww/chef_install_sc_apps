@@ -9,6 +9,7 @@
 
 folder_to_install = node['install_sc_apps']['folder_to_install']
 folder_git_keys   = node['install_sc_apps']['folder_git_keys']
+git_wrapper_path  = "#{folder_to_install}/git_wrapper.sh"
 
 # Create dir
 # directory "#{folder_to_install}" do
@@ -19,7 +20,7 @@ folder_git_keys   = node['install_sc_apps']['folder_git_keys']
 # end
 
 # Create ssh wrapper
-file "#{folder_to_install}/git_wrapper.sh" do
+file git_wrapper_path do
   owner "vagrant"
   mode "0755"
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_git_keys}/.ssh/id_rsa \"$@\""
@@ -32,7 +33,7 @@ git socket_app_folder do
   repository "git@github.com:denoww/socket-server-seucondominio.git"
   revision "master"
   action :sync
-  ssh_wrapper "/home/vagrant/git_wrapper.sh"
+  ssh_wrapper git_wrapper_path
   user "vagrant"
 end
 
@@ -43,7 +44,7 @@ git sc_app_folder do
   repository sc_app_repo
   revision "master"
   action :sync
-  ssh_wrapper "/home/vagrant/git_wrapper.sh"
+  ssh_wrapper git_wrapper_path
   user "vagrant"
   # notifies :run, "execute[install-gems]", :immediately
 end
