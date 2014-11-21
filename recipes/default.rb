@@ -7,10 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
-folder_apps = node['sc_config']['folder_apps']
-enviroment  = node['sc_config']['enviroment']
+folder_apps       = node['sc_config']['folder_apps']
+enviroment        = node['sc_config']['enviroment']
+folder_ssh_config = node['sc_config']['folder_ssh_config']
 
-git_wrapper_path  = "#{folder_apps}/git_wrapper.sh"
+ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
 # Create dir if not exists
 directory "#{folder_apps}" do
@@ -21,7 +22,7 @@ directory "#{folder_apps}" do
 end
 
 # Create ssh wrapper file
-file git_wrapper_path do
+file ssh_file_wrapper do
   owner "vagrant"
   mode "0755"
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_apps}/.ssh/id_rsa \"$@\""
@@ -34,7 +35,7 @@ git socket_app_folder do
   repository "git@github.com:denoww/socket-server-seucondominio.git"
   revision "master"
   action :sync
-  ssh_wrapper git_wrapper_path
+  ssh_wrapper ssh_file_wrapper
   user "vagrant"
 end
 
@@ -47,7 +48,10 @@ git sc_app_folder do
   repository sc_app_repo
   revision "master"
   action :sync
-  ssh_wrapper git_wrapper_path
+  ssh_wrapper ssh_file_wrapper
+  additional_remotes [
+    sc_app_repo
+  ]
   user "vagrant"
 end
 
@@ -72,6 +76,7 @@ case enviroment
 when "production"
 when "staging"
 when "development"
+  tasks << "echo 'Creating and feeding database';"
   tasks << "rake db:setup;"
 end
   
