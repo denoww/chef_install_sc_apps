@@ -64,22 +64,21 @@ rvm_shell "bundle" do
   EOF
 end
 
-# bundle install --path .bundle
 # config seucondominio
-# tasks = ""
-# case enviroment
-# when "production"
-# when "staging"
-# when "development"
-#   tasks << "rake db:setup;"
-# end
+tasks = ""
+case enviroment
+when "production"
+when "staging"
+when "development"
+  # tasks << "rake db:setup;"
+end
   
-# bash "sc_config" do
-#   user "vagrant"
-#   cwd  sc_app_folder
-#   code <<-EOH
-#     cp gitignore_sample .gitignore
-#     cp config/application_sample.yml config/application.yml
-#     #{tasks}
-#   EOH
-# end  
+bash "sc_config" do
+  user "vagrant"
+  cwd  sc_app_folder
+  code <<-EOH
+    cp gitignore_sample .gitignore
+    cp config/application_sample.yml config/application.yml
+    #{tasks}
+  EOH
+end  
