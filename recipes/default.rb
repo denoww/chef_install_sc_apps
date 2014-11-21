@@ -39,8 +39,10 @@ git socket_app_folder do
 end
 
 # Clone seucondominio
-sc_app_folder = "#{folder_apps}/rails"
-sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
+sc_app_folder = "#{folder_apps}/seucondominio"
+sc_app_repo = 'git@github.com:denoww/seucondominio.git'
+# sc_app_folder = "#{folder_apps}/rails"
+# sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
 git sc_app_folder do
   repository sc_app_repo
   revision "master"
