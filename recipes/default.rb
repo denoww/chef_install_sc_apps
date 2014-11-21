@@ -77,6 +77,8 @@ when "production"
 when "staging"
 when "development"
   tasks << "echo 'Creating and feeding database';"
+  tasks << "rake db:drop;"
+  tasks << "rake db:mongoid:drop;"
   tasks << "rake db:setup;"
 end
   
