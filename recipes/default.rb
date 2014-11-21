@@ -72,7 +72,7 @@ case enviroment
 when "production"
 when "staging"
 when "development"
-  # tasks << "rake db:setup;"
+  tasks << "rake db:setup;"
 end
   
 bash "sc_config" do
