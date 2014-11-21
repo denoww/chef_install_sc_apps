@@ -56,14 +56,15 @@ end
 
 rvm_shell "bundle" do
   ruby_string node[:rvm][:default_ruby]
-  user        "vagrant"
-  group       "vagrant"
+  user        "root"
+  group       "root"
   cwd         sc_app_folder
   code        <<-EOF
     bundle install
   EOF
 end
 
+# bundle install --path .bundle
 # config seucondominio
 # tasks = ""
 # case enviroment
