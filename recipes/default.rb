@@ -15,7 +15,7 @@ ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
 # Create dir if not exists
 directory "#{folder_apps}" do
-  owner 'vagrant'
+  owner 'root'
   group 'root'
   mode '0666'
   action :create
@@ -23,7 +23,7 @@ end
 
 # Create ssh wrapper file
 file ssh_file_wrapper do
-  owner "vagrant"
+  owner "root"
   mode "0755"
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
 end
