@@ -25,7 +25,7 @@ end
 file ssh_file_wrapper do
   owner "vagrant"
   mode "0755"
-  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_apps}/.ssh/id_rsa \"$@\""
+  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/.ssh/id_rsa \"$@\""
 end
 
 
