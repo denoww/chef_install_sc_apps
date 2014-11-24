@@ -36,7 +36,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "vagrant"
+  user "root"
 end
 
 # Clone seucondominio
@@ -46,10 +46,11 @@ sc_app_repo = 'git@github.com:denoww/seucondominio.git'
 # sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
 git sc_app_folder do
   repository sc_app_repo
-  revision "master"
+  # revision "master"
+  revision "vagrant"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "vagrant"
+  user "root"
 end
 
 
@@ -80,7 +81,7 @@ when "development"
 end
   
 bash "sc_config" do
-  user "vagrant"
+  user "root"
   cwd  sc_app_folder
   code <<-EOH
     cp gitignore_sample .gitignore
