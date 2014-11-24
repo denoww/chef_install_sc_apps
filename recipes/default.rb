@@ -77,9 +77,9 @@ when "production"
 when "staging"
 when "development"
   tasks << "echo 'Creating and feeding database';"
-  tasks << "rake db:drop;"
-  tasks << "rake db:mongoid:drop;"
-  tasks << "rake db:setup;"
+  tasks << "bundle exec rake db:drop;"
+  tasks << "bundle exec rake db:mongoid:drop;"
+  tasks << "bundle exec rake db:setup;"
 end
   
 bash "sc_config" do
