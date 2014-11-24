@@ -49,9 +49,6 @@ git sc_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  additional_remotes [
-    sc_app_repo
-  ]
   user "vagrant"
 end
 
