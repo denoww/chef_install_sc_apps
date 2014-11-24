@@ -15,7 +15,7 @@ ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
 # Create dir if not exists
 directory "#{folder_apps}" do
-  owner 'root'
+  owner 'vagrant'
   group 'root'
   mode '0666'
   action :create
@@ -23,7 +23,7 @@ end
 
 # Create ssh wrapper file
 file ssh_file_wrapper do
-  owner "root"
+  owner "vagrant"
   mode "0755"
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
 end
@@ -36,7 +36,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "root"
+  user "vagrant"
 end
 
 # Clone seucondominio
@@ -50,7 +50,7 @@ git sc_app_folder do
   revision "vagrant"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "root"
+  user "vagrant"
 end
 
 
@@ -81,7 +81,7 @@ when "development"
 end
   
 bash "sc_config" do
-  user "root"
+  user "vagrant"
   cwd  sc_app_folder
   code <<-EOH
     cp gitignore_sample .gitignore
