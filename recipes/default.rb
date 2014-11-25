@@ -64,7 +64,7 @@ rvm_shell "bundle" do
   group       "root"
   cwd         sc_app_folder
   code        <<-EOF
-    bundle exec bundle install
+    bundle install
   EOF
 end
 
@@ -75,9 +75,9 @@ when "production"
 when "staging"
 when "development"
   tasks << "echo 'Creating and feeding database';"
-  tasks << "bundle exec rake db:drop;"
-  tasks << "bundle exec rake db:mongoid:drop;"
-  tasks << "bundle exec rake db:setup;"
+  tasks << "rake db:drop;"
+  tasks << "rake db:mongoid:drop;"
+  tasks << "rake db:setup;"
 end
   
 bash "sc_config" do
