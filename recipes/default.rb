@@ -32,18 +32,18 @@ end
 
 file "#{home_guest}/.bashrc" do
   cwd Chef::Config[:file_cache_path]
-  code <<-EOF
+  content <<-EOF
 
     # ~/.bashrc: executed by bash(1) for non-login shells.
     # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
     # for examples
 
     alias sc:k='killall -9 node; killall -9 ruby'
-    alias sc:cd='cd ~/apps/seucondominio'
+    alias sc:cd='cd #{folder_apps}/seucondominio'
     alias sc:s='sc:cd; sc:k; foreman start -f Procfile.dev'
-    alias sc:c='spring rails c'
-    alias sc:g='guard'
-    alias sc:r='spring rake'
+    alias sc:c='sc:cd; spring rails c'
+    alias sc:g='sc:cd; guard'
+    alias sc:r='sc:cd; spring rake'
 
     alias sc:test='RAILS_ENV=test'
     alias sc:test:c='sc:test sc:c'
