@@ -64,7 +64,7 @@ rvm_shell "bundle" do
   group       "root"
   cwd         sc_app_folder
   code        <<-EOF
-    bundle install
+    bundle exec bundle install
   EOF
 end
 
