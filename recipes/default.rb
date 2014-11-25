@@ -14,12 +14,12 @@ folder_ssh_config = node['sc_config']['folder_ssh_config']
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
 # Create dir if not exists
-# directory "#{folder_apps}" do
-#   owner 'vagrant'
-#   group 'root'
-#   mode '0666'
-#   action :create
-# end
+directory "#{folder_apps}" do
+  owner 'vagrant'
+  group 'root'
+  mode '0666'
+  action :create
+end
 
 # Create ssh wrapper file
 file ssh_file_wrapper do
