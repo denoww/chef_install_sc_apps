@@ -15,9 +15,9 @@ ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
 # Create dir if not exists
 directory "#{folder_apps}" do
-  owner 'vagrant'
-  group 'root'
-  mode '0666'
+  # owner 'vagrant'
+  # group 'root'
+  # mode '0666'
   action :create
 end
 
