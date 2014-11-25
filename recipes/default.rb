@@ -10,6 +10,7 @@
 folder_apps       = node['sc_config']['folder_apps']
 enviroment        = node['sc_config']['enviroment']
 folder_ssh_config = node['sc_config']['folder_ssh_config']
+home_guest        = node['sc_config']['home_guest']
 
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
@@ -26,6 +27,38 @@ file ssh_file_wrapper do
   owner "vagrant"
   mode "0755"
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
+end
+
+
+file "#{home_guest}/.bashrc" do
+  cwd Chef::Config[:file_cache_path]
+  code <<-EOF
+
+    # ~/.bashrc: executed by bash(1) for non-login shells.
+    # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+    # for examples
+
+    alias sc:k='killall -9 node; killall -9 ruby'
+    alias sc:cd='cd ~/apps/seucondominio'
+    alias sc:s='sc:cd; sc:k; foreman start -f Procfile.dev'
+    alias sc:c='spring rails c'
+    alias sc:g='guard'
+    alias sc:r='spring rake'
+
+    alias sc:test='RAILS_ENV=test'
+    alias sc:test:c='sc:test sc:c'
+    alias sc:test:r='sc:test sc:r'
+
+    alias sc:staging='RAILS_ENV=staging'
+    alias sc:staging:c='sc:staging sc:c'
+    alias sc:staging:r='sc:staging sc:r'
+
+    alias sc:production='RAILS_ENV=production'
+    alias sc:production:c='sc:production sc:c'
+    alias sc:production:r='sc:production sc:r'
+
+  EOF
+  not_if { ::File.exists?(install_path) }
 end
 
 
