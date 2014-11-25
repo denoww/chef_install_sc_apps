@@ -13,6 +13,7 @@ folder_ssh_config = node['sc_config']['folder_ssh_config']
 home_guest        = node['sc_config']['home_guest']
 
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
+bashrc            = "#{home_guest}/.bashrc"
 
 # Create dir if not exists
 directory "#{folder_apps}" do
@@ -30,8 +31,9 @@ file ssh_file_wrapper do
 end
 
 
-file "#{home_guest}/.bashrc" do
-  cwd Chef::Config[:file_cache_path]
+file bashrc do
+  owner "vagrant"
+  mode "0755"  
   content <<-EOF
 
     # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -58,7 +60,7 @@ file "#{home_guest}/.bashrc" do
     alias sc:production:r='sc:production sc:r'
 
   EOF
-  not_if { ::File.exists?(install_path) }
+  not_if { ::File.exists?(bashrc) }
 end
 
 
