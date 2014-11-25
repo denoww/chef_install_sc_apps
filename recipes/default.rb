@@ -113,6 +113,7 @@ when "development"
   tasks << "rake db:drop;"
   tasks << "rake db:mongoid:drop;"
   tasks << "rake db:setup;"
+  tasks << "RAILS_ENV=test rake db:setup;"
 end
   
 bash "sc_config" do
