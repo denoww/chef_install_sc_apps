@@ -23,6 +23,7 @@ profile            = "#{home_guest}/.profile"
 
 
 file bashrc do
+  owner "vagrant"
   content IO.read("/etc/skel/.bashrc")
   action :create
 end
