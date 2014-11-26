@@ -13,27 +13,50 @@ folder_ssh_config = node['sc_config']['folder_ssh_config']
 home_guest        = node['sc_config']['home_guest']
 
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
-bashrc            = "#{home_guest}/.bashrc"
-# bashrc            = "#{home_guest}/.bash_aliases"
+
+##########################################
+# BASH E PROFILE
+##########################################
+bash_aliases            = "#{home_guest}/.bash_aliases"
+profile            = "#{home_guest}/.profile"
+# bash_aliases            = "#{home_guest}/.bash_aliases"
 
 
-# Create dir if not exists
-directory "#{folder_apps}" do
-  # owner 'vagrant'
-  # group 'root'
-  # mode '0666'
-  action :create
-end
-
-# Create ssh wrapper file
-file ssh_file_wrapper do
+file profile do
   owner "vagrant"
-  mode "0755"
-  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
+  mode "0755"  
+  content <<-EOF
+    # ~/.profile: executed by the command interpreter for login shells.
+    # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+    # exists.
+    # see /usr/share/doc/bash/examples/startup-files for examples.
+    # the files are located in the bash-doc package.
+
+    # the default umask is set in /etc/profile; for setting the umask
+    # for ssh logins, install and configure the libpam-umask package.
+    #umask 022
+
+    # if running bash
+    if [ -n "$BASH_VERSION" ]; then
+        # include .bashrc if it exists
+        if [ -f "$HOME/.bashrc" ]; then
+      . "$HOME/.bashrc"
+        fi
+    fi
+    
+    # set PATH so it includes user's private bin if it exists
+    if [ -d "$HOME/bin" ] ; then
+        PATH="$HOME/bin:$PATH"
+    fi
+    
+    
+  EOF
+  not_if { ::File.exists?(profile) }
 end
 
 
-file bashrc do
+
+file bash_aliases do
   owner "vagrant"
   mode "0755"  
   content <<-EOF
@@ -62,19 +85,26 @@ file bashrc do
     alias sc:production:r='sc:production sc:r'
 
   EOF
-  not_if { ::File.exists?(bashrc) }
+  not_if { ::File.exists?(bash_aliases) }
 end
 
-execute "run bashrc" do
-  command "source #{bashrc}"
-  action :run
+
+
+
+##########################################
+# APPS
+##########################################
+
+# Create ssh wrapper file
+file ssh_file_wrapper do
+  owner "vagrant"
+  mode "0755"
+  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
 end
 
-bash "run source bash" do
-  user "vagrant"
-  code <<-EOH        
-    source #{bashrc}
-  EOH
+# Create dir if not exists
+directory "#{folder_apps}" do
+  action :create
 end
 
 # # Clone socket server
