@@ -13,7 +13,9 @@ folder_ssh_config = node['sc_config']['folder_ssh_config']
 home_guest        = node['sc_config']['home_guest']
 
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
-bashrc            = "#{home_guest}/.bashrc"
+bashrc            = "#{home_guest}/.bash_aliases"
+# bashrc            = "#{home_guest}/.bashrc"
+
 
 # Create dir if not exists
 directory "#{folder_apps}" do
