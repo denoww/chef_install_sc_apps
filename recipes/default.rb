@@ -63,6 +63,10 @@ file bashrc do
   not_if { ::File.exists?(bashrc) }
 end
 
+execute "source #{bashrc}" do
+  user "vagrant"
+end
+
 
 # Clone socket server
 socket_app_folder = "#{folder_apps}/socket_server"
@@ -110,9 +114,13 @@ when "production"
 when "staging"
 when "development"
   tasks << "echo 'Creating and feeding database';"
-  tasks << "rake db:drop;"
-  tasks << "rake db:mongoid:drop;"
-  tasks << "rake db:setup;"
+  # development
+  tasks << "RAILS_ENV=development rake db:drop;"
+  tasks << "RAILS_ENV=development rake db:mongoid:drop;"
+  tasks << "RAILS_ENV=development rake db:setup;"
+  # test
+  tasks << "RAILS_ENV=test rake db:drop;"
+  tasks << "RAILS_ENV=test rake db:mongoid:drop;"
   tasks << "RAILS_ENV=test rake db:setup;"
 end
   
