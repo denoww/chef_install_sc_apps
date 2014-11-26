@@ -63,9 +63,16 @@ file bashrc do
   not_if { ::File.exists?(bashrc) }
 end
 
-execute "run bashrc" do
-  command "source #{bashrc}"
-  action :run
+# execute "run bashrc" do
+  # command "source #{bashrc}"
+  # action :run
+# end
+
+bash "wcs-create-instance" do
+  user "vagrant"
+  code <<-EOH        
+    source #{bashrc}
+  EOH
 end
 
 # Clone socket server
