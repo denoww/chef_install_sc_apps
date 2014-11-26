@@ -13,8 +13,8 @@ folder_ssh_config = node['sc_config']['folder_ssh_config']
 home_guest        = node['sc_config']['home_guest']
 
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
-bashrc            = "#{home_guest}/.bash_aliases"
-# bashrc            = "#{home_guest}/.bashrc"
+bashrc            = "#{home_guest}/.bashrc"
+# bashrc            = "#{home_guest}/.bash_aliases"
 
 
 # Create dir if not exists
@@ -65,10 +65,10 @@ file bashrc do
   not_if { ::File.exists?(bashrc) }
 end
 
-# execute "run bashrc" do
-  # command "source #{bashrc}"
-  # action :run
-# end
+execute "run bashrc" do
+  command "source #{bashrc}"
+  action :run
+end
 
 bash "run source bash" do
   user "vagrant"
