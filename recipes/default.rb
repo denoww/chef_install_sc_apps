@@ -17,10 +17,15 @@ ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 ##########################################
 # BASH E PROFILE
 ##########################################
-bash_aliases            = "#{home_guest}/.bash_aliases"
+bashrc             = "#{home_guest}/.bashrc"
+bash_aliases       = "#{home_guest}/.bash_aliases"
 profile            = "#{home_guest}/.profile"
-# bash_aliases            = "#{home_guest}/.bash_aliases"
 
+
+file bashrc do
+  content IO.read("/etc/skel/.bashrc")
+  action :create
+end
 
 file profile do
   owner "vagrant"
