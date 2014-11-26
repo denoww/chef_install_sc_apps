@@ -29,7 +29,7 @@ end
 
 file profile do
   owner "vagrant"
-  mode "0755"  
+  mode "0755"
   content <<-EOF
     # ~/.profile: executed by the command interpreter for login shells.
     # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
@@ -48,13 +48,13 @@ file profile do
       . "$HOME/.bashrc"
         fi
     fi
-    
+
     # set PATH so it includes user's private bin if it exists
     if [ -d "$HOME/bin" ] ; then
         PATH="$HOME/bin:$PATH"
     fi
-    
-    
+
+
   EOF
 end
 
@@ -62,7 +62,7 @@ end
 
 file bash_aliases do
   owner "vagrant"
-  mode "0755"  
+  mode "0755"
   content <<-EOF
 
     alias sc:k='killall -9 node; killall -9 ruby'
@@ -147,8 +147,7 @@ sc_app_folder = "#{folder_apps}/seucondominio"
 sc_app_repo = 'git@github.com:denoww/seucondominio.git'
 git sc_app_folder do
   repository sc_app_repo
-  # revision "master"
-  revision "vagrant"
+  revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
   user "vagrant"
@@ -185,7 +184,7 @@ when "development"
   tasks << "RAILS_ENV=test rake db:mongoid:drop;"
   tasks << "RAILS_ENV=test rake db:setup;"
 end
-  
+
 bash "sc_config" do
   user "vagrant"
   cwd  sc_app_folder
@@ -194,4 +193,4 @@ bash "sc_config" do
     cp config/application_sample.yml config/application.yml
     #{tasks}
   EOH
-end  
+end
