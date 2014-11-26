@@ -61,10 +61,6 @@ file bash_aliases do
   mode "0755"  
   content <<-EOF
 
-    # ~/.bashrc: executed by bash(1) for non-login shells.
-    # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-    # for examples
-
     alias sc:k='killall -9 node; killall -9 ruby'
     alias sc:cd='cd #{folder_apps}/seucondominio'
     alias sc:s='sc:cd; sc:k; foreman start -f Procfile.dev'
