@@ -63,10 +63,7 @@ file bashrc do
   not_if { ::File.exists?(bashrc) }
 end
 
-execute "source #{bashrc}" do
-  user "vagrant"
-end
-
+execute "source #{bashrc}"
 
 # Clone socket server
 socket_app_folder = "#{folder_apps}/socket_server"
