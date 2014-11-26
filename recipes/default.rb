@@ -11,11 +11,10 @@ folder_apps       = node['sc_config']['folder_apps']
 enviroment        = node['sc_config']['enviroment']
 folder_ssh_config = node['sc_config']['folder_ssh_config']
 home_guest        = node['sc_config']['home_guest']
-
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
 ##########################################
-# BASH E PROFILE
+# BASH, ALIAS and PROFILE
 ##########################################
 bashrc             = "#{home_guest}/.bashrc"
 bash_aliases       = "#{home_guest}/.bash_aliases"
@@ -57,7 +56,6 @@ file profile do
     
     
   EOF
-  # not_if { ::File.exists?(profile) }
 end
 
 
@@ -113,14 +111,13 @@ file bash_aliases do
     alias sc_production_r='sc:production:r'
 
   EOF
-  # not_if { ::File.exists?(bash_aliases) }
 end
 
 
 
 
 ##########################################
-# APPS
+# APPS SC
 ##########################################
 
 # Create ssh wrapper file
@@ -135,68 +132,66 @@ directory "#{folder_apps}" do
   action :create
 end
 
-# # Clone socket server
-# socket_app_folder = "#{folder_apps}/socket_server"
-# git socket_app_folder do
-#   repository "git@github.com:denoww/socket-server-seucondominio.git"
-#   revision "master"
-#   action :sync
-#   ssh_wrapper ssh_file_wrapper
-#   user "vagrant"
-# end
+# Clone socket server
+socket_app_folder = "#{folder_apps}/socket_server"
+git socket_app_folder do
+  repository "git@github.com:denoww/socket-server-seucondominio.git"
+  revision "master"
+  action :sync
+  ssh_wrapper ssh_file_wrapper
+  user "vagrant"
+end
 
-# # Clone seucondominio
-# sc_app_folder = "#{folder_apps}/seucondominio"
-# sc_app_repo = 'git@github.com:denoww/seucondominio.git'
-# # sc_app_folder = "#{folder_apps}/rails"
-# # sc_app_repo = 'https://github.com/railstutorial/sample_app.git'
-# git sc_app_folder do
-#   repository sc_app_repo
-#   # revision "master"
-#   revision "vagrant"
-#   action :sync
-#   ssh_wrapper ssh_file_wrapper
-#   user "vagrant"
-# end
+# Clone seucondominio
+sc_app_folder = "#{folder_apps}/seucondominio"
+sc_app_repo = 'git@github.com:denoww/seucondominio.git'
+git sc_app_folder do
+  repository sc_app_repo
+  # revision "master"
+  revision "vagrant"
+  action :sync
+  ssh_wrapper ssh_file_wrapper
+  user "vagrant"
+end
 
 
-# gem_package 'bundler' do
-#   options '--no-ri --no-rdoc'
-# end
+gem_package 'bundler' do
+  options '--no-ri --no-rdoc'
+end
 
-# rvm_shell "bundle" do
-#   ruby_string node[:rvm][:default_ruby]
-#   user        "root"
-#   group       "root"
-#   cwd         sc_app_folder
-#   code        <<-EOF
-#     bundle install
-#   EOF
-# end
+rvm_shell "bundle" do
+  ruby_string node[:rvm][:default_ruby]
+  user        "root"
+  group       "root"
+  cwd         sc_app_folder
+  code        <<-EOF
+    bundle install
+  EOF
+end
 
-# # config seucondominio
-# tasks = ""
-# case enviroment
-# when "production"
-# when "staging"
-# when "development"
-#   tasks << "echo 'Creating and feeding database';"
-#   # development
-#   tasks << "RAILS_ENV=development rake db:drop;"
-#   tasks << "RAILS_ENV=development rake db:mongoid:drop;"
-#   tasks << "RAILS_ENV=development rake db:setup;"
-#   # test
-#   tasks << "RAILS_ENV=test rake db:drop;"
-#   tasks << "RAILS_ENV=test rake db:mongoid:drop;"
-#   tasks << "RAILS_ENV=test rake db:setup;"
-# end
+# config seucondominio
+tasks = ""
+case enviroment
+when "production"
+when "staging"
+when "development"
+  tasks << "echo 'Creating and feeding database';"
+  # development
+  tasks << "RAILS_ENV=development rake db:drop;"
+  tasks << "RAILS_ENV=development rake db:mongoid:drop;"
+  tasks << "RAILS_ENV=development rake db:setup;"
+  # test
+  tasks << "RAILS_ENV=test rake db:drop;"
+  tasks << "RAILS_ENV=test rake db:mongoid:drop;"
+  tasks << "RAILS_ENV=test rake db:setup;"
+end
   
-# bash "sc_config" do
-#   user "vagrant"
-#   cwd  sc_app_folder
-#   code <<-EOH
-#     cp gitignore_sample .gitignore
-#     cp config/application_sample.yml config/application.yml
-#     #{tasks}
-#   EOH
-# end  
+bash "sc_config" do
+  user "vagrant"
+  cwd  sc_app_folder
+  code <<-EOH
+    cp gitignore_sample .gitignore
+    cp config/application_sample.yml config/application.yml
+    #{tasks}
+  EOH
+end  
