@@ -22,7 +22,8 @@ profile            = "#{home_guest}/.profile"
 
 
 file bashrc do
-  owner "root"
+  owner "vagrant"
+  mode "0755"
   content IO.read("/etc/skel/.bashrc")
   action :create
   not_if { ::File.exists?(bashrc) }
