@@ -23,16 +23,16 @@ profile            = "#{home_guest}/.profile"
 
 file bashrc do
   owner "root"
-  mode "0755"
-  action :create
+  #mode "0755"
+  #action :create
   content IO.read("/etc/skel/.bashrc")
   not_if { ::File.exists?(bashrc) }
 end
 
 file profile do
   owner "root"
-  mode "0755"
-  action :create
+  #mode "0755"
+  #action :create
   content <<-EOF
     # ~/.profile: executed by the command interpreter for login shells.
     # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
