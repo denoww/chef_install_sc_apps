@@ -130,7 +130,7 @@ end
 
 # Create ssh wrapper file
 file ssh_file_wrapper do
-  #owner "vagrant"
+  owner "root"
   mode "0777"
   action :create
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
@@ -148,7 +148,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  # user "root"
+  user "root"
 end
 
 # Clone seucondominio
@@ -159,7 +159,7 @@ git sc_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  # user "root"
+  user "root"
 end
 
 
