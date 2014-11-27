@@ -148,7 +148,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  # user "vagrant"
+  user "root"
 end
 
 # Clone seucondominio
@@ -159,7 +159,7 @@ git sc_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  # user "vagrant"
+  user "root"
 end
 
 
