@@ -16,7 +16,7 @@ ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 ##########################################
 # BASH, ALIAS and PROFILE
 ##########################################
-bashrc             = "#{home_guest}/.bashrc"
+bashrc             = "#{home_guest}/.bash_profile"
 bash_aliases       = "#{home_guest}/.bash_aliases"
 profile            = "#{home_guest}/.profile"
 
