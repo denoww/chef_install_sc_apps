@@ -30,7 +30,7 @@ end
 
 file profile do
   owner "root"
-  mode "0755"
+  #mode "0755"
   content <<-EOF
     # ~/.profile: executed by the command interpreter for login shells.
     # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
@@ -64,7 +64,7 @@ end
 
 file bash_aliases do
   owner "root"
-  mode "0755"
+  #mode "0755"
   content <<-EOF
 
     alias sc:k='killall -9 node; killall -9 ruby'
