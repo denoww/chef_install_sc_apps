@@ -131,7 +131,7 @@ end
 # Create ssh wrapper file
 file ssh_file_wrapper do
   #owner "vagrant"
-  #mode "0755"
+  mode "0755"
   action :create_if_missing
   content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
 end
