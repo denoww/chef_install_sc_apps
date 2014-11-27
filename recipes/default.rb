@@ -148,7 +148,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "root"
+  # user "root"
 end
 
 # Clone seucondominio
@@ -159,7 +159,7 @@ git sc_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "root"
+  # user "root"
 end
 
 
@@ -195,7 +195,7 @@ when "development"
 end
 
 bash "sc_config" do
-  user "vagrant"
+  # user "vagrant"
   cwd  sc_app_folder
   code <<-EOH
     cp gitignore_sample .gitignore
