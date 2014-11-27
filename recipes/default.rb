@@ -22,14 +22,14 @@ profile            = "#{home_guest}/.profile"
 
 
 file bashrc do
-  owner "vagrant"
+  owner "root"
   content IO.read("/etc/skel/.bashrc")
   action :create
   not_if { ::File.exists?(bashrc) }
 end
 
 file profile do
-  owner "vagrant"
+  owner "root"
   mode "0755"
   content <<-EOF
     # ~/.profile: executed by the command interpreter for login shells.
@@ -63,7 +63,7 @@ end
 
 
 file bash_aliases do
-  owner "vagrant"
+  owner "root"
   mode "0755"
   content <<-EOF
 
