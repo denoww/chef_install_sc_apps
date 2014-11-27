@@ -25,6 +25,7 @@ file bashrc do
   owner "vagrant"
   content IO.read("/etc/skel/.bashrc")
   action :create
+  not_if { ::File.exists?(bashrc) }
 end
 
 file profile do
@@ -56,6 +57,7 @@ file profile do
 
 
   EOF
+  not_if { ::File.exists?(profile) }
 end
 
 
@@ -111,6 +113,7 @@ file bash_aliases do
     alias sc_production_r='sc:production:r'
 
   EOF
+  not_if { ::File.exists?(bash_aliases) }
 end
 
 
