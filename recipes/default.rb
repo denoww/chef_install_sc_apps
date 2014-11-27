@@ -137,7 +137,7 @@ end
 
 # Create dir if not exists
 directory "#{folder_apps}" do
-  action :create_if_missing
+  action :create
 end
 
 # Clone socket server
