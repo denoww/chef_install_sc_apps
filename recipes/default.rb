@@ -186,13 +186,13 @@ when "staging"
 when "development"
   tasks << "echo 'Creating and feeding database';"
   # development
-  tasks << "RAILS_ENV=development rake db:drop;"
-  tasks << "RAILS_ENV=development rake db:mongoid:drop;"
-  tasks << "RAILS_ENV=development rake db:setup;"
+  tasks << "RAILS_ENV=development bundle exec rake db:drop;"
+  tasks << "RAILS_ENV=development bundle exec rake db:mongoid:drop;"
+  tasks << "RAILS_ENV=development bundle exec rake db:setup;"
   # test
-  tasks << "RAILS_ENV=test rake db:drop;"
-  tasks << "RAILS_ENV=test rake db:mongoid:drop;"
-  tasks << "RAILS_ENV=test rake db:setup;"
+  tasks << "RAILS_ENV=test bundle exec rake db:drop;"
+  tasks << "RAILS_ENV=test bundle exec rake db:mongoid:drop;"
+  tasks << "RAILS_ENV=test bundle exec rake db:setup;"
 end
 
 bash "sc_config" do
