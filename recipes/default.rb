@@ -130,10 +130,11 @@ end
 
 # Create ssh wrapper file
 file ssh_file_wrapper do
-  owner "root"
+  #owner "root"
   mode "0777"
   action :create
-  content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
+  #content "#!/bin/sh\nexec /usr/bin/ssh -i #{folder_ssh_config}/id_rsa \"$@\""
+  content "/usr/bin/env ssh -o StrictHostKeyChecking=no -i #{folder_ssh_config}/id_rsa $1 $2"
 end
 
 # Create dir if not exists
@@ -148,7 +149,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "root"
+  user "vagrant"
 end
 
 # Clone seucondominio
@@ -159,7 +160,7 @@ git sc_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "root"
+  user "vagrant"
 end
 
 
