@@ -84,7 +84,7 @@ file bash_aliases do
     alias sc:c='sc:cd; spring rails c'
     alias sc_c='sc:c'
 
-    alias sc:g='sc:cd; guard'
+    alias sc:g='sc:cd; spring rails g'
     alias sc_g='sc:g'
 
     alias sc:r='sc:cd; spring rake'
