@@ -184,6 +184,7 @@ case enviroment
 when "production"
 when "staging"
 when "development"
+  tasks << "export LC_ALL=C;"
   tasks << "echo 'Creating and feeding database';"
   tasks << "bundle exec rake sc:seed;"
 end
