@@ -87,13 +87,13 @@ file bash_aliases do
     alias sc:g='sc:cd; spring rails g'
     alias sc_g='sc:g'
 
-    alias sc:r='sc:cd; spring rake'
+    alias sc:r='spring rake'
     alias sc_r='sc:r'
 
     alias sc:test='RAILS_ENV=test'
     alias sc_test='sc:test'
 
-    alias sc:test:c='sc:test sc:c'
+    alias sc:test:c='sc:c sc:test'
     alias sc_test_c='sc:test:c'
 
     alias sc:test:r='sc:test sc:r'
@@ -102,7 +102,7 @@ file bash_aliases do
     alias sc:staging='RAILS_ENV=staging'
     alias sc_staging='sc:staging'
 
-    alias sc:staging:c='sc:staging sc:c'
+    alias sc:staging:c='sc:c sc:staging'
     alias sc_staging_c='sc:staging:c'
 
     alias sc:staging:r='sc:staging sc:r'
@@ -111,7 +111,7 @@ file bash_aliases do
     alias sc:production='RAILS_ENV=production'
     alias sc_production='sc:production'
 
-    alias sc:production:c='sc:production sc:c'
+    alias sc:production:c='sc:c sc:production'
     alias sc_production_c='sc:production:c'
 
     alias sc:production:r='sc:production sc:r'
