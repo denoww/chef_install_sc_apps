@@ -13,6 +13,16 @@ folder_ssh_config = node['sc_config']['folder_ssh_config']
 home_guest        = node['sc_config']['home_guest']
 ssh_file_wrapper  = "#{folder_ssh_config}/git_wrapper.sh"
 
+case enviroment
+when "production"
+when "staging"
+  user = "root"
+when "development"
+  user = "vagrant"
+end
+
+
+
 ##########################################
 # BASH, ALIAS and PROFILE
 ##########################################
@@ -149,7 +159,7 @@ git socket_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "vagrant"
+  user user
 end
 
 # Clone seucondominio
@@ -160,7 +170,7 @@ git sc_app_folder do
   revision "master"
   action :sync
   ssh_wrapper ssh_file_wrapper
-  user "vagrant"
+  user user
 end
 
 
