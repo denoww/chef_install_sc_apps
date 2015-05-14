@@ -1,4 +1,4 @@
-name             'install_sc_apps'
+name             'install_sc_apps_dev'
 maintainer       'YOUR_COMPANY_NAME'
 maintainer_email 'YOUR_EMAIL'
 license          'All rights reserved'
